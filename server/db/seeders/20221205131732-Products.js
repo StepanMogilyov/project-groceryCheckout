@@ -9,21 +9,21 @@ module.exports = {
         {
           name: 'Apple',
           price: 60,
-          article: 1,
+          article: '000018321651500001',
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
           name: 'Banana',
           price: 20,
-          article: 2,
+          article: '2',
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
           name: 'Potato',
           price: 10,
-          article: 3,
+          article: '3',
           createdAt: new Date(),
           updatedAt: new Date()
         },

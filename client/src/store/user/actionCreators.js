@@ -1,9 +1,13 @@
-import { GET_USER, LOGOUT_USER } from './actionTypes';
+// import { GET_USER, LOGOUT_USER } from './actionTypes';
 
-export function getUser(objectUser) {
-  return { type: GET_USER, payload: objectUser };
+import { useDispatch } from 'react-redux';
+
+export function useGetProductAC(newProduct) {
+  console.log('newProduct: ', newProduct);
+
+  return { type: 'GET_PRODUCT', payload: newProduct };
 }
 
-export function logoutUser() {
-  return { type: LOGOUT_USER };
-}
+// export function logoutUser() {
+//   return { type: LOGOUT_USER };
+// }

@@ -5,26 +5,9 @@ import Button from '@mui/material/Button';
 import getProduct from '../../helpers/getProduct';
 import OneProduct from '../OneProduct/OneProduct';
 import styles from './Main.module.css';
-import javascriptBarcodeReader from 'javascript-barcode-reader';
+import BarcodeScanner from '../BarcodeScanner';
 
 export default function Main() {
-  javascriptBarcodeReader({
-    /* Image ID || HTML5 Image || HTML5 Canvas || HTML5 Canvas ImageData || Image URL */
-    // image: source,
-    barcode: 'code-2of5',
-    // barcodeType: 'industrial',
-    options: {
-      // useAdaptiveThreshold: true // for images with sahded portions
-      // singlePass: true
-    },
-  })
-    .then((code) => {
-      console.log(code);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
   const [checkedItems, setCheckedItems] = useState([]);
   const [products, setProducts] = useState([]);
   const [sum, setSum] = useState(0);
@@ -60,7 +43,8 @@ export default function Main() {
 
   return (
     <div className={styles.main}>
-      <Box
+      <BarcodeScanner />
+      {/* <Box
         onSubmit={searchProductHandler}
         component="form"
         sx={{
@@ -81,7 +65,7 @@ export default function Main() {
             Искать
           </Button>
         </p>
-      </Box>
+      </Box> */}
       {products.length ? (
         <div className={styles.products}>
           <div className={styles.sum}>Сумма покупки: {sum}</div>
