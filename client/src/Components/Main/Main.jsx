@@ -6,11 +6,16 @@ import getProduct from '../../helpers/getProduct';
 import OneProduct from '../OneProduct/OneProduct';
 import styles from './Main.module.css';
 import BarcodeScanner from '../BarcodeScanner';
+import { useSelector } from 'react-redux';
+
 
 export default function Main() {
   const [checkedItems, setCheckedItems] = useState([]);
   const [products, setProducts] = useState([]);
   const [sum, setSum] = useState(0);
+
+  const allProducts = useSelector((state) => state.product)
+
 
   const searchProductHandler = async (e) => {
     e.preventDefault();
@@ -43,6 +48,8 @@ export default function Main() {
 
   return (
     <div className={styles.main}>
+      <button onClick={() => console.log(allProducts)}>Глобал стейт</button>
+      
       <BarcodeScanner />
       {/* <Box
         onSubmit={searchProductHandler}

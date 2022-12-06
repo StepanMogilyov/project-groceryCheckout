@@ -5,15 +5,17 @@ import { ArrowBack } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import getProduct from '../helpers/getProduct';
 import { useSelector, useDispatch } from 'react-redux';
-import { getProductAC } from '../store/user/actionCreators';
+import { getProductAC } from '../store/product/actionCreators';
 import { store } from '../index';
 import { connect } from 'react-redux';
 
 
 
-const productFromServ = []
+let productFromServ;
 
 class BarcodeScanner extends Component {
+  serverProducts = []
+
   state = {
     results: [],
     productFromServer: [],
@@ -27,27 +29,27 @@ class BarcodeScanner extends Component {
     this.setState({ results: [] });
     this.setState({ results: this.state.results.concat([result]) });
     const prod = await getProduct(this.state.results[0].codeResult.code);
-    // useRdcr(prod);
+    this.useRdcr(prod);
   };
 
   useRdcr(arg) {
-    this.setState({ productFromServer: arg });
-    this.props.getProductAC(this.state.productFromServer);
-    // productFromServ.push(this.state.productFromServer)
-    // getProductAC(11)
-    // console.log(this.state.productFromServer);
+
+    // this.setState({ productFromServer: arg });
+
+    productFromServ = arg
+    this.props.getProductAC()
 
 
-  }
-
-  sendToAC() {
+    // productFromServ.push(arg)
+    // this.props.getProductAC(arg);    
+    // console.log(this.props);
 
   }
 
   render() {
     return (
       <div>
-        <button onClick={() => this.useRdcr(['TEST'])}>STATE</button>
+        <button onClick={() => this.useRdcr({'TEST': 123})}>STATE</button>
         <Link to="/">
           <Fab style={{ marginRight: 10 }} color="secondary">
             <ArrowBack />
@@ -79,7 +81,7 @@ class BarcodeScanner extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getProductAC: () => dispatch(getProductAC(123)),
+    getProductAC: () => dispatch(getProductAC(productFromServ)),    
   };
 };
 
