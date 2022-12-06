@@ -15,6 +15,7 @@ export default function Main() {
   const [sum, setSum] = useState(0);
 
   const allProducts = useSelector((state) => state.product)
+  console.log('allProducts: ', allProducts);
 
   const searchProductHandler = async (e) => {
     e.preventDefault();
