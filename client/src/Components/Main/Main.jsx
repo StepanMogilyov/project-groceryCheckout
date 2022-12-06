@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import getProduct from '../../helpers/getProduct';
 import OneProduct from '../OneProduct/OneProduct';
 import styles from './Main.module.css';
 import BarcodeScanner from '../BarcodeScanner';
@@ -10,33 +7,33 @@ import { useSelector } from 'react-redux';
 
 
 export default function Main() {
-  const [checkedItems, setCheckedItems] = useState([]);
-  const [products, setProducts] = useState([]);
+  // const [checkedItems, setCheckedItems] = useState([]);
+  // const [products, setProducts] = useState([]);
   const [sum, setSum] = useState(0);
 
   const allProducts = useSelector((state) => state.product)
   // console.log('allProducts: ', allProducts);
 
-  const searchProductHandler = async (e) => {
-    e.preventDefault();
+  // const searchProductHandler = async (e) => {
+  //   e.preventDefault();
 
-    const inputValue = Number(e.target.productActicle.value);
-    if (inputValue) {
-      if (!checkedItems.includes(inputValue)) {
-        setCheckedItems([...checkedItems, inputValue]);
-        const product = await getProduct(inputValue);
-        if (product) {
-          setProducts([...products, product]);
-        } else {
-          alert('Продукт не найден');
-        }
-      } else {
-        alert('Товар уже выбран');
-      }
-    } else {
-      alert('Номер не корректный');
-    }
-  };
+  //   const inputValue = Number(e.target.productActicle.value);
+  //   if (inputValue) {
+  //     if (!checkedItems.includes(inputValue)) {
+  //       setCheckedItems([...checkedItems, inputValue]);
+  //       const product = await getProduct(inputValue);
+  //       if (product) {
+  //         setProducts([...products, product]);
+  //       } else {
+  //         alert('Продукт не найден');
+  //       }
+  //     } else {
+  //       alert('Товар уже выбран');
+  //     }
+  //   } else {
+  //     alert('Номер не корректный');
+  //   }
+  // };
 
   const addSumHandler = (price) => {
     setSum(sum + price);

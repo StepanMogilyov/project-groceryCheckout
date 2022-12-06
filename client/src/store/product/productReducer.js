@@ -1,14 +1,11 @@
-// import { GET_USER, LOGOUT_USER } from './actionTypes';
+import { GET_PRODUCT } from "./actionTypes";
 
-const initialState = []
+const initialState = [];
 
 export default function productReducer(state = initialState, action) {
-  console.log('productReducer');
-
   switch (action.type) {
-    case 'GET_PRODUCT': {
-      return [...state, action.payload]
-      // return [...state, {a:Math.random()}]
+    case GET_PRODUCT: {
+      return [...state, action.payload];
     }
     default:
       return state;
