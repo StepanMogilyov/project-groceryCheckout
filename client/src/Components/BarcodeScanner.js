@@ -79,8 +79,8 @@ class BarcodeScanner extends Component {
 
         <TextareaAutosize
           style={{ fontSize: 32, width: 320, height: 100, marginTop: 30 }}
-          rowsMax={4}
-          defaultValue={"No data scanned"}
+          maxRows={4}
+          // defaultValue={"No data scanned"}
           value={
             this.state.results[0]
               ? this.state.results[0].codeResult?.code
