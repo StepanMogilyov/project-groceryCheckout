@@ -16,7 +16,6 @@ export default function Main() {
 
   const allProducts = useSelector((state) => state.product)
 
-
   const searchProductHandler = async (e) => {
     e.preventDefault();
 
@@ -73,10 +72,10 @@ export default function Main() {
           </Button>
         </p>
       </Box> */}
-      {products.length ? (
+      {allProducts.length ? (
         <div className={styles.products}>
           <div className={styles.sum}>Сумма покупки: {sum}</div>
-          {products.map((el) => (
+          {allProducts.map((el) => (
             <OneProduct
               el={el}
               addSumHandler={addSumHandler}

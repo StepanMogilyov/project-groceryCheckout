@@ -28,11 +28,18 @@ class BarcodeScanner extends Component {
   _onDetected = async (result) => {
     this.setState({ results: [] });
     this.setState({ results: this.state.results.concat([result]) });
-    const prod = await getProduct(this.state.results[0].codeResult.code);
-    this.useRdcr(prod);
+    if(this.state.results[0].codeResult) {
+      setTimeout(async () => {
+        const prod = await getProduct(this.state.results[0].codeResult.code);
+        if(prod) {
+          this.useRdcr(prod);
+        }
+      }, 100)
+    }
   };
 
   useRdcr(arg) {
+
 
     // this.setState({ productFromServer: arg });
 
@@ -70,7 +77,7 @@ class BarcodeScanner extends Component {
           defaultValue={'No data scanned'}
           value={
             this.state.results[0]
-              ? this.state.results[0].codeResult.code
+              ? this.state.results[0].codeResult?.code
               : 'No data scanned'
           }
         />

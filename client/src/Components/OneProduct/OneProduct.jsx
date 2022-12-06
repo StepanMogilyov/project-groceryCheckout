@@ -3,6 +3,7 @@ import { Button, Chip } from '@mui/material';
 import styles from './OneProduct.module.css';
 
 export default function OneProduct({ el, addSumHandler, decSumHandler }) {
+  console.log('el: ', el);
   const [price, setPrice] = useState(el.price);
   const [quantity, setQuantity] = useState(1);
 
