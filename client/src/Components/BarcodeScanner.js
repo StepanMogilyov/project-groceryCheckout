@@ -12,13 +12,21 @@ import { connect } from "react-redux";
 let productFromServ;
 
 class BarcodeScanner extends Component {
-  fixMultiRequest = [];
+  constructor(props) {
+    super(props);
+  }
+
+  fixMultiplyRequest = [];
   serverProducts = [];
 
   state = {
     results: [],
     productFromServer: [],
   };
+
+  // hook = () => {
+  //   dispatch(getProductAC(123));
+  // };
 
   _scan = () => {
     this.setState({ scanning: !this.state.scanning });
@@ -29,12 +37,16 @@ class BarcodeScanner extends Component {
     this.setState({ results: this.state.results.concat([result]) });
 
     if (this.state.results[0].codeResult) {
-      this.fixMultiRequest.push(this.state.results[0].codeResult.code);
+      this.fixMultiplyRequest.push(this.state.results[0].codeResult.code);
     }
-    if (this.fixMultiRequest.length <= 1) {
-      this.currentCode = this.fixMultiRequest[0];
+    if (this.fixMultiplyRequest.length === 1) {
+      this.currentCode = this.fixMultiplyRequest[0];
       const prod = await getProduct(this.currentCode);
-      this.fixMultiRequest = []
+
+      // setTimeout(() => {
+      //   this.fixMultiplyRequest = [];
+      // }, 200);
+
       if (prod) {
         this.useRdcr(prod);
       }
@@ -42,14 +54,9 @@ class BarcodeScanner extends Component {
   };
 
   useRdcr(arg) {
-    // this.setState({ productFromServer: arg });
+    const { getProductAC } = this.props;                
+    getProductAC(arg);
 
-    productFromServ = arg;
-    this.props.getProductAC();
-
-    // productFromServ.push(arg)
-    // this.props.getProductAC(arg);
-    // console.log(this.props);
   }
 
   render() {
@@ -87,8 +94,10 @@ class BarcodeScanner extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getProductAC: () => dispatch(getProductAC(productFromServ)),
+    asdf: () => dispatch(getProductAC(productFromServ)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(BarcodeScanner);
+// export default connect(null, mapDispatchToProps)(BarcodeScanner);
+// export default BarcodeScanner;
+export default connect(null, { getProductAC })(BarcodeScanner);
