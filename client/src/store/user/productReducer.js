@@ -3,10 +3,11 @@
 const initialState = []
 
 export default function userReducer(state = initialState, action) {
-console.log(33333333333333);
+
+  console.log(state, 8888888888);
   switch (action.type) {
     case 'GET_PRODUCT': {
-      console.log(action);
+      return [state, ...action.payload]
       // return action.payload;
     }
 

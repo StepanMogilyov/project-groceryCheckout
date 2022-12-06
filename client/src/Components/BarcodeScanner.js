@@ -5,13 +5,13 @@ import { ArrowBack } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import getProduct from '../helpers/getProduct';
 import { useSelector, useDispatch } from 'react-redux';
-import { useGetProductAC } from '../store/user/actionCreators';
+import { getProductAC } from '../store/user/actionCreators';
 import { store } from '../index';
 import { connect } from 'react-redux';
 
-function useDispFunc(pr) {
-  return useDispatch();
-}
+
+
+const productFromServ = []
 
 class BarcodeScanner extends Component {
   state = {
@@ -32,8 +32,16 @@ class BarcodeScanner extends Component {
 
   useRdcr(arg) {
     this.setState({ productFromServer: arg });
-    // useGetProductAC(this.state.productFromServer);
-    console.log('props: ', this.props.useGetProductAC());
+    this.props.getProductAC(this.state.productFromServer);
+    // productFromServ.push(this.state.productFromServer)
+    // getProductAC(11)
+    // console.log(this.state.productFromServer);
+
+
+  }
+
+  sendToAC() {
+
   }
 
   render() {
@@ -71,7 +79,7 @@ class BarcodeScanner extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    useGetProductAC: () => dispatch(useGetProductAC()),
+    getProductAC: () => dispatch(getProductAC(123)),
   };
 };
 
