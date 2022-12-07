@@ -30,6 +30,7 @@ class BarcodeScanner extends Component {
 
     this.res.push(result);
 
+    
     if (this.res.length === 1) {
       this.currentCode = this.res[0].codeResult.code;
       const prod = await getProduct(this.currentCode);
