@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 
 
 export default function Main() {
+
   // const [checkedItems, setCheckedItems] = useState([]);
   // const [products, setProducts] = useState([]);
   const [sum, setSum] = useState(0);

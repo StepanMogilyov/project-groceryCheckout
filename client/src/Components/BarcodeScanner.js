@@ -8,11 +8,15 @@ import { getProductAC } from "../store/product/actionCreators";
 import { connect } from "react-redux";
 
 class BarcodeScanner extends Component {
+  constructor(props) {
+    super(props)
+  }
   
   fixMultiplyRequest = [];
   serverProducts = [];
 
   state = {
+    rerender: 0,
     results: [],
   };
 
@@ -20,7 +24,12 @@ class BarcodeScanner extends Component {
     this.setState({ scanning: !this.state.scanning });
   };
 
+  componentDidUpdate(prev) {
+
+  }
+
   _onDetected = async (result) => {
+
     this.setState({ results: [] });
     this.setState({ results: this.state.results.concat([result]) });
 
@@ -30,14 +39,26 @@ class BarcodeScanner extends Component {
     if (this.fixMultiplyRequest.length === 1) {
       this.currentCode = this.fixMultiplyRequest[0];
       const prod = await getProduct(this.currentCode);
-
+      
       if (prod) {
         this.useRdcr(prod);
+      } else {
+        alert('Товар не найден')
       }
+      
+      this.state.results = []
+      this.fixMultiplyRequest = []
+      
     }
   };
 
+
+  
   useRdcr(arg) {
+
+    
+    // this.state.rerender += 1
+    // this.render()
     const { getProductAC } = this.props;                
     getProductAC(arg);
   }
