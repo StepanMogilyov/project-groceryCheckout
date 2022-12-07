@@ -8,7 +8,9 @@ import { getProductAC } from "../store/product/actionCreators";
 import { connect } from "react-redux";
 
 class BarcodeScanner extends Component {
+
   res = [];
+  selectedProductsIDs = [];
 
   state = {
     results: [],
@@ -19,8 +21,6 @@ class BarcodeScanner extends Component {
   };
 
   _onDetected = async (result) => {
-    console.log("result: ", result);
-
     // this.setState({ results: [] });
     // if (this.state.results.length >= 0) {
     //   this.setState({ results: this.state.results.concat([result]) });
@@ -33,10 +33,27 @@ class BarcodeScanner extends Component {
     if (this.res.length === 1) {
       this.currentCode = this.res[0].codeResult.code;
       const prod = await getProduct(this.currentCode);
-      console.log("prod: ", prod);
+
       if (prod) {
-        this.useRdcr(prod);
+        if (!this.selectedProductsIDs.includes(prod.id)) {
+          this.selectedProductsIDs.push(prod.id);
+
+          this.useRdcr(prod);
+
+          setTimeout(() => {
+            this.res = [];
+          }, 800);
+        } else {
+          setTimeout(() => {
+            this.res = [];
+          }, 800);
+
+          alert("Товар уже выбран");
+        }
       } else {
+        setTimeout(() => {
+          this.res = [];
+        }, 800);
         alert("Товар не найден");
       }
     }
