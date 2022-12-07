@@ -8,15 +8,10 @@ import { getProductAC } from "../store/product/actionCreators";
 import { connect } from "react-redux";
 
 class BarcodeScanner extends Component {
-  constructor(props) {
-    super(props)
-  }
-  
-  fixMultiplyRequest = [];
-  serverProducts = [];
+
+  res = [];
 
   state = {
-    rerender: 0,
     results: [],
   };
 
@@ -24,49 +19,49 @@ class BarcodeScanner extends Component {
     this.setState({ scanning: !this.state.scanning });
   };
 
-  componentDidUpdate(prev) {
-
-  }
-
   _onDetected = async (result) => {
+    console.log("_onDetected");
+    // this.setState({ results: [] });
+    // if (this.state.results.length >= 0) {
+    //   this.setState({ results: this.state.results.concat([result]) });
+    //   this.setState({ counter: this.state.counter: this.counter + 1 })
+    //   console.log('counter: ', this.counter);
+    // }
 
-    this.setState({ results: [] });
-    this.setState({ results: this.state.results.concat([result]) });
+    this.res.push(result);
 
-    if (this.state.results[0]?.codeResult) {
-      this.fixMultiplyRequest.push(this.state.results[0].codeResult.code);
-    }
-    if (this.fixMultiplyRequest.length === 1) {
-      this.currentCode = this.fixMultiplyRequest[0];
+    if (this.res.length === 1) {
+      this.currentCode = this.res[0].codeResult.code;
       const prod = await getProduct(this.currentCode);
-      
       if (prod) {
         this.useRdcr(prod);
       } else {
-        alert('Товар не найден')
+        alert("Товар не найден");
       }
-      
-      this.state.results = []
-      this.fixMultiplyRequest = []
-      
     }
+
+    //    this.currentCode = this.state.results[0].codeResult.code;
+    //    const prod = await getProduct(this.currentCode);
+    //    console.log('prod: ', prod);
+
+    // setTimeout(() => {
+    //   this.state.results = [];
+    //   console.log('STATE CLEARED', this.state.results);
+    // }, 100)
+    // this.fixMultiplyRequest = []
   };
 
-
-  
   useRdcr(arg) {
-
-    
     // this.state.rerender += 1
     // this.render()
-    const { getProductAC } = this.props;                
+    const { getProductAC } = this.props;
     getProductAC(arg);
   }
 
   render() {
     return (
       <div>
-        <button onClick={() => this.useRdcr({ TEST: 123 })}>Прокинуть объект</button>
+        <button onClick={() => this._onDetected(123)}>_onDetected</button>
         <Link to="/">
           <Fab style={{ marginRight: 10 }} color="secondary">
             <ArrowBack />
