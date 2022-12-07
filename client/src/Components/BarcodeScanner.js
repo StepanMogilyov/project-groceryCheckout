@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 import getProduct from "../helpers/getProduct";
 import { getProductAC } from "../store/product/actionCreators";
 import { connect } from "react-redux";
+import soundOfPurchase from "./soundOfPurchase.mp3";
 
 class BarcodeScanner extends Component {
-
   res = [];
   selectedProductsIDs = [];
 
@@ -21,25 +21,16 @@ class BarcodeScanner extends Component {
   };
 
   _onDetected = async (result) => {
-    // this.setState({ results: [] });
-    // if (this.state.results.length >= 0) {
-    //   this.setState({ results: this.state.results.concat([result]) });
-    //   this.setState({ counter: this.state.counter: this.counter + 1 })
-    //   console.log('counter: ', this.counter);
-    // }
-
     this.res.push(result);
-
     if (this.res.length === 1) {
       this.currentCode = this.res[0].codeResult.code;
-      const prod = await getProduct(this.currentCode);
+      const product = await getProduct(this.currentCode);
 
-      if (prod) {
-        if (!this.selectedProductsIDs.includes(prod.id)) {
-          this.selectedProductsIDs.push(prod.id);
-
-          this.useRdcr(prod);
-
+      if (product) {
+        new Audio(soundOfPurchase).play();
+        if (!this.selectedProductsIDs.includes(product.id)) {
+          this.selectedProductsIDs.push(product.id);
+          this.putProductToAC(product);
           setTimeout(() => {
             this.res = [];
           }, 800);
@@ -47,7 +38,6 @@ class BarcodeScanner extends Component {
           setTimeout(() => {
             this.res = [];
           }, 800);
-
           alert("Товар уже выбран");
         }
       } else {
@@ -57,21 +47,9 @@ class BarcodeScanner extends Component {
         alert("Товар не найден");
       }
     }
-
-    //    this.currentCode = this.state.results[0].codeResult.code;
-    //    const prod = await getProduct(this.currentCode);
-    //    console.log('prod: ', prod);
-
-    // setTimeout(() => {
-    //   this.state.results = [];
-    //   console.log('STATE CLEARED', this.state.results);
-    // }, 100)
-    // this.fixMultiplyRequest = []
   };
 
-  useRdcr(arg) {
-    // this.state.rerender += 1
-    // this.render()
+  putProductToAC(arg) {
     const { getProductAC } = this.props;
     getProductAC(arg);
   }
@@ -311,12 +289,4 @@ class BarcodeScanner extends Component {
   }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     asdf: () => dispatch(getProductAC(productFromServ)),
-//   };
-// };
-
-// export default connect(null, mapDispatchToProps)(BarcodeScanner);
-// export default BarcodeScanner;
 export default connect(null, { getProductAC })(BarcodeScanner);
