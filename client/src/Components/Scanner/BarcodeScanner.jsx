@@ -1,15 +1,11 @@
 import React, { Component } from "react";
 import Scanner from "./Scanner";
-import { Fab, Paper } from "@material-ui/core";
-import { ArrowBack } from "@material-ui/icons";
-import { Link } from "react-router-dom";
 import getProduct from "../../helpers/getProduct";
 import { getProductAC } from "../../store/product/actionCreators";
 import { connect } from "react-redux";
 import soundOfScan from "./soundOfScan.mp3";
 
 class BarcodeScanner extends Component {
-
   scanResult = [];
   selectedProductsIDs = [];
   startTimer = false;
@@ -266,19 +262,7 @@ class BarcodeScanner extends Component {
         >
           _onDetected
         </button>
-        <Link to="/">
-          <Fab style={{ marginRight: 10 }} color="secondary">
-            <ArrowBack />
-          </Fab>
-        </Link>
-        <span>Barcode Scanner</span>
-
-        <Paper
-          variant="outlined"
-          style={{ marginTop: 30, width: 320, height: 320 }}
-        >
-          <Scanner onDetected={this._onDetected} />
-        </Paper>
+        <Scanner onDetected={this._onDetected} />
       </div>
     );
   }
