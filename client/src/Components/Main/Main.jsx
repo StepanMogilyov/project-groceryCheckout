@@ -8,12 +8,14 @@ import { resetProductsAC } from "../../store/product/actionCreators";
 
 export default function Main() {
   const [sum, setSum] = useState(0);
+  const [rerender, setRerender] = useState(0);
   const allProducts = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
   const resetStateHandler = () => {
     dispatch(resetProductsAC());
     setSum(0);
+    setRerender(rerender + 1);
   };
 
   const addSumHandler = (price) => {
@@ -26,7 +28,7 @@ export default function Main() {
 
   return (
     <div className={styles.main}>
-      <BarcodeScanner />      
+      <BarcodeScanner rerender={rerender} />
       {allProducts.length ? (
         <div className={styles.products}>
           <div className={styles.sum}>Сумма покупки: {sum}</div>

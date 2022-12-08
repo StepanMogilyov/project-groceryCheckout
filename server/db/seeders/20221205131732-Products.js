@@ -7,23 +7,23 @@ module.exports = {
       'Products',
       [
         {
-          name: 'Apple',
-          price: 60,
+          name: 'Dirol',
+          price: 30,
           article: '000018321651500001',
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          name: 'Banana',
+          name: 'Orbit',
           price: 20,
-          article: '2',
+          article: '000018361251200001',
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
-          name: 'Potato',
-          price: 10,
-          article: '3',
+          name: 'Cola',
+          price: 40,
+          article: '000018359264100001',
           createdAt: new Date(),
           updatedAt: new Date()
         },

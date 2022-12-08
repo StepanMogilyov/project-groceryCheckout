@@ -10,20 +10,26 @@ import soundOfScan from "./soundOfScan.mp3";
 
 class BarcodeScanner extends Component {
 
-  res = [];
+  scanResult = [];
   selectedProductsIDs = [];
   startTimer = false;
+
+  componentDidUpdate() {
+    this.scanResult = [];
+    this.selectedProductsIDs = [];
+    this.startTimer = false;
+  }
 
   _scan = () => {
     this.setState({ scanning: !this.state.scanning });
   };
 
   _onDetected = async (result) => {
-    if (this.res.length < 2) {
-      this.res.push(result);
+    if (this.scanResult.length < 2) {
+      this.scanResult.push(result);
     }
-    if (this.res.length === 1) {
-      this.currentCode = this.res[0].codeResult.code;
+    if (this.scanResult.length === 1) {
+      this.currentCode = this.scanResult[0].codeResult.code;
       const product = await getProduct(this.currentCode);
       if (product) {
         if (!this.selectedProductsIDs.includes(product.id)) {
@@ -40,16 +46,15 @@ class BarcodeScanner extends Component {
         alert("Товар не найден");
       }
       if (this.startTimer) {
-        setTimeout(() => {
-          this.res = [];
-        }, 800);
         this.startTimer = false;
+        setTimeout(() => {
+          this.scanResult = [];
+        }, 2000);
       }
     }
   };
 
   putProductToAC(arg) {
-    this.selectedProductsIDs = []
     const { getProductAC } = this.props;
     getProductAC(arg);
   }
@@ -57,6 +62,7 @@ class BarcodeScanner extends Component {
   render() {
     return (
       <div>
+        <button onClick={() => console.log(this.state.results)}>check</button>
         <button
           onClick={() =>
             this._onDetected({
