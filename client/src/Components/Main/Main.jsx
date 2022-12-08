@@ -1,40 +1,28 @@
-import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import OneProduct from '../OneProduct/OneProduct';
-import styles from './Main.module.css';
-import BarcodeScanner from '../Scanner/BarcodeScanner';
-import { useSelector } from 'react-redux';
-
+import React, { useState } from "react";
+import Button from "@mui/material/Button";
+import OneProduct from "../OneProduct/OneProduct";
+import styles from "./Main.module.css";
+import BarcodeScanner from "../Scanner/BarcodeScanner";
+import { useDispatch, useSelector } from "react-redux";
+import { resetProductsAC } from "../../store/product/actionCreators";
 
 export default function Main() {
-
-  // const [checkedItems, setCheckedItems] = useState([]);
-  // const [products, setProducts] = useState([]);
   const [sum, setSum] = useState(0);
+  const [resetAcc, setResetAcc] = useState(false);
 
-  const allProducts = useSelector((state) => state.product)
-  // console.log('allProducts: ', allProducts);
+  const allProducts = useSelector((state) => state.products);
+  const dispatch = useDispatch();
 
-  // const searchProductHandler = async (e) => {
-  //   e.preventDefault();
+  const resetStateHandler = () => {
+    dispatch(resetProductsAC());
+    setResetAcc(!resetAcc);
 
-  //   const inputValue = Number(e.target.productActicle.value);
-  //   if (inputValue) {
-  //     if (!checkedItems.includes(inputValue)) {
-  //       setCheckedItems([...checkedItems, inputValue]);
-  //       const product = await getProduct(inputValue);
-  //       if (product) {
-  //         setProducts([...products, product]);
-  //       } else {
-  //         alert('Продукт не найден');
-  //       }
-  //     } else {
-  //       alert('Товар уже выбран');
-  //     }
-  //   } else {
-  //     alert('Номер не корректный');
-  //   }
-  // };
+    // setTimeout(() => {
+
+    //   setResetAcc(false);
+    // }, 300)
+  };
+  console.log("render");
 
   const addSumHandler = (price) => {
     setSum(sum + price);
@@ -47,7 +35,6 @@ export default function Main() {
   return (
     <div className={styles.main}>
       <button onClick={() => console.log(allProducts)}>Глобал стейт</button>
-      
       <BarcodeScanner />
       {/* <Box
         onSubmit={searchProductHandler}
@@ -83,7 +70,12 @@ export default function Main() {
             />
           ))}
           <div className={styles.payBtn}>
-            <Button type="submit" variant="contained" color="success">
+            <Button
+              onClick={resetStateHandler}
+              type="submit"
+              variant="contained"
+              color="success"
+            >
               Оплатить
             </Button>
           </div>
