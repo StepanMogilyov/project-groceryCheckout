@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Chip } from '@mui/material';
-import styles from './OneProduct.module.css';
+import React, { useState, useEffect } from "react";
+import { Button, Chip } from "@mui/material";
+import styles from "./OneProduct.module.css";
 
 export default function OneProduct({ el, addSumHandler, decSumHandler }) {
   const [price, setPrice] = useState(el.price);
@@ -30,14 +30,13 @@ export default function OneProduct({ el, addSumHandler, decSumHandler }) {
       <div>{el.name}</div>
       <div>Цена за штуку: {el.price}р</div>
       <div>{quantity} шт.</div>
-      <Button onClick={incHandler} variant="contained" color="success">
-        +
-      </Button>
-      <Chip label={`${price}р`} />
       <Button onClick={decHandler} variant="contained" color="error">
         -
       </Button>
-
+      <Chip label={`${price}р`} />
+      <Button onClick={incHandler} variant="contained" color="success">
+        +
+      </Button>
       <hr className={styles.hr} />
     </>
   );

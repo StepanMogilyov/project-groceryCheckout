@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import OneProduct from '../OneProduct/OneProduct';
 import styles from './Main.module.css';
-import BarcodeScanner from '../BarcodeScanner';
+import BarcodeScanner from '../Scanner/BarcodeScanner';
 import { useSelector } from 'react-redux';
 
 

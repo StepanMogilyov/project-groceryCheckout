@@ -1,33 +1,30 @@
 import React, { Component } from "react";
 import Scanner from "./Scanner";
-import { Fab, TextareaAutosize, Paper } from "@material-ui/core";
+import { Fab, Paper } from "@material-ui/core";
 import { ArrowBack } from "@material-ui/icons";
 import { Link } from "react-router-dom";
-import getProduct from "../helpers/getProduct";
-import { getProductAC } from "../store/product/actionCreators";
+import getProduct from "../../helpers/getProduct";
+import { getProductAC } from "../../store/product/actionCreators";
 import { connect } from "react-redux";
-import soundOfPurchase from "./soundOfPurchase.mp3";
+import soundOfScan from "./soundOfScan.mp3";
 
 class BarcodeScanner extends Component {
   res = [];
   selectedProductsIDs = [];
-
-  state = {
-    results: [],
-  };
 
   _scan = () => {
     this.setState({ scanning: !this.state.scanning });
   };
 
   _onDetected = async (result) => {
-    this.res.push(result);
+    if (this.res.length < 2) {
+      this.res.push(result);
+    }
     if (this.res.length === 1) {
       this.currentCode = this.res[0].codeResult.code;
       const product = await getProduct(this.currentCode);
-
       if (product) {
-        new Audio(soundOfPurchase).play();
+        new Audio(soundOfScan).play();
         if (!this.selectedProductsIDs.includes(product.id)) {
           this.selectedProductsIDs.push(product.id);
           this.putProductToAC(product);
@@ -269,21 +266,10 @@ class BarcodeScanner extends Component {
 
         <Paper
           variant="outlined"
-          style={{ marginTop: 30, width: 640, height: 320 }}
+          style={{ marginTop: 30, width: 320, height: 320 }}
         >
           <Scanner onDetected={this._onDetected} />
         </Paper>
-
-        <TextareaAutosize
-          style={{ fontSize: 32, width: 320, height: 100, marginTop: 30 }}
-          maxRows={4}
-          // defaultValue={"No data scanned"}
-          value={
-            this.state.results[0]
-              ? this.state.results[0].codeResult?.code
-              : "No data scanned"
-          }
-        />
       </div>
     );
   }
