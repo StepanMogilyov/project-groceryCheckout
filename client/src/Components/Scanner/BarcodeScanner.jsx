@@ -11,6 +11,7 @@ import soundOfScan from "./soundOfScan.mp3";
 class BarcodeScanner extends Component {
   res = [];
   selectedProductsIDs = [];
+  startTimer = false;
 
   _scan = () => {
     this.setState({ scanning: !this.state.scanning });
@@ -24,24 +25,24 @@ class BarcodeScanner extends Component {
       this.currentCode = this.res[0].codeResult.code;
       const product = await getProduct(this.currentCode);
       if (product) {
-        new Audio(soundOfScan).play();
         if (!this.selectedProductsIDs.includes(product.id)) {
+          new Audio(soundOfScan).play();
           this.selectedProductsIDs.push(product.id);
           this.putProductToAC(product);
-          setTimeout(() => {
-            this.res = [];
-          }, 800);
+          this.startTimer = true;
         } else {
-          setTimeout(() => {
-            this.res = [];
-          }, 800);
+          this.startTimer = true;
           alert("Товар уже выбран");
         }
       } else {
+        this.startTimer = true;
+        alert("Товар не найден");
+      }
+      if (this.startTimer) {
         setTimeout(() => {
           this.res = [];
         }, 800);
-        alert("Товар не найден");
+        this.startTimer = false;
       }
     }
   };
