@@ -2,7 +2,6 @@ const morgan = require('morgan');
 const express = require('express');
 const path = require('path');
 
-const checkUserRouter = require('../src/routes/checkUserRouter');
 const checkProduct = require('../src/routes/checkProduct')
 
 module.exports = function configApp(app) {
@@ -12,7 +11,6 @@ module.exports = function configApp(app) {
 
   app.use(express.static(path.join(__dirname, '../../client/build')));
 
-  app.use('/check', checkUserRouter);
   app.use('/check-product', checkProduct);
 
   app.get('*', (req, res) => {
