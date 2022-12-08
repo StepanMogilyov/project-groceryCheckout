@@ -14,16 +14,6 @@ class BarcodeScanner extends Component {
   selectedProductsIDs = [];
   startTimer = false;
 
-  // reset = () => {
-  //   console.log("this.props.reset: ", this.props.reset);
-  //   if (this.props.reset) {
-  //     console.log("RESET");
-  //     this.res = [];
-  //     this.selectedProductsIDs = [];
-  //     this.startTimer = false;
-  //   }
-  // };
-
   _scan = () => {
     this.setState({ scanning: !this.state.scanning });
   };
@@ -67,7 +57,6 @@ class BarcodeScanner extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.reset}>RESET</button>
         <button
           onClick={() =>
             this._onDetected({

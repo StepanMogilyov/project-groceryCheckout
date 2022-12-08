@@ -8,21 +8,13 @@ import { resetProductsAC } from "../../store/product/actionCreators";
 
 export default function Main() {
   const [sum, setSum] = useState(0);
-  const [resetAcc, setResetAcc] = useState(false);
-
   const allProducts = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
   const resetStateHandler = () => {
     dispatch(resetProductsAC());
-    setResetAcc(!resetAcc);
-
-    // setTimeout(() => {
-
-    //   setResetAcc(false);
-    // }, 300)
+    setSum(0);
   };
-  console.log("render");
 
   const addSumHandler = (price) => {
     setSum(sum + price);
@@ -34,30 +26,7 @@ export default function Main() {
 
   return (
     <div className={styles.main}>
-      <button onClick={() => console.log(allProducts)}>Глобал стейт</button>
-      <BarcodeScanner />
-      {/* <Box
-        onSubmit={searchProductHandler}
-        component="form"
-        sx={{
-          '& > :not(style)': { m: 1, width: '25ch' },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField
-          name="productActicle"
-          label="Артикул товара"
-          variant="filled"
-          color="success"
-          focused
-        />
-        <p className={styles.btn}>
-          <Button type="submit" variant="contained">
-            Искать
-          </Button>
-        </p>
-      </Box> */}
+      <BarcodeScanner />      
       {allProducts.length ? (
         <div className={styles.products}>
           <div className={styles.sum}>Сумма покупки: {sum}</div>
