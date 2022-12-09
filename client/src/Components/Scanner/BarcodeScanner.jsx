@@ -4,11 +4,25 @@ import getProduct from "../../helpers/getProduct";
 import { getProductAC } from "../../store/product/actionCreators";
 import { connect } from "react-redux";
 import soundOfScan from "./soundOfScan.mp3";
+import Skeleton from "@mui/material/Skeleton";
 
 class BarcodeScanner extends Component {
+  state = {
+    isCameraReady: false,
+  };
   scanResult = [];
   selectedProductsIDs = [];
   startTimer = false;
+
+  componentDidMount() {
+    setTimeout(() => {
+    this.setState({ isCameraReady: true });
+    }, 1000);
+  }
+
+  showConsole() {
+    console.log(this.state.isCameraReady);
+  }
 
   componentDidUpdate() {
     this.scanResult = [];
@@ -58,7 +72,8 @@ class BarcodeScanner extends Component {
   render() {
     return (
       <div>
-        <button onClick={() => console.log(this.state.results)}>check</button>
+        <button onClick={() => this.showConsole()}>showConsole</button>
+        {/* <button onClick={() => console.log(this.state.results)}>check</button> */}
         <button
           onClick={() =>
             this._onDetected({
@@ -262,7 +277,16 @@ class BarcodeScanner extends Component {
         >
           _onDetected
         </button>
-        <Scanner onDetected={this._onDetected} />
+
+        {this.state.isCameraReady ? (
+          <Scanner onDetected={this._onDetected} />
+        ) : (
+          <>
+            <Skeleton variant="rectangular" width="320px" height="320px">
+              {/* <div style={{ paddingTop: "57%" }} /> */}
+            </Skeleton>
+          </>
+        )}
       </div>
     );
   }
