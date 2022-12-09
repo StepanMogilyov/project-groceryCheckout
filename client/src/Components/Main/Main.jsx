@@ -35,12 +35,19 @@ export default function Main() {
   return (
     <div className={styles.main}>
       <BarcodeScanner rerender={rerender} />
-
       {showSmile ? (
-        <><InsertEmoticonIcon
-          style={{ height: "110px", width: "110px", color: "green", marginLeft: '100px' }}
-        />
-        <h1 style={{color: 'green', marginLeft: '20px'}}>Спасибо за покупку</h1>
+        <>
+          <InsertEmoticonIcon
+            style={{
+              height: "110px",
+              width: "110px",
+              color: "green",
+              marginLeft: "100px",
+            }}
+          />
+          <h1 style={{ color: "green", marginLeft: "20px" }}>
+            Спасибо за покупку
+          </h1>
         </>
       ) : (
         <></>
