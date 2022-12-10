@@ -4,9 +4,6 @@
   display: flex;
   flex-direction: column;
 }
-.btn {
-  padding-left: 55px;
-}
 .sum {
   padding-top: 20px;
   padding-left: 25px;
@@ -18,8 +15,3 @@
 .payBtn {
   padding-left: 30px;
 }
-/* .sml {
-  width: 110px;
-  height: 110px;
-  color: green;
-} */

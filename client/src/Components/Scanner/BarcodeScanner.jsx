@@ -11,15 +11,10 @@ class BarcodeScanner extends Component {
   state = {
     isCameraReady: false,
   };
+
   scanResult = [];
   selectedProductsIDs = [];
   startTimer = false;
-
-  // componentDidMount() {
-  //   setTimeout(() => {
-  //     this.setState({ isCameraReady: true });
-  //   }, 1000);
-  // }
 
   componentDidUpdate() {
     this.scanResult = [];
@@ -31,6 +26,11 @@ class BarcodeScanner extends Component {
     setTimeout(() => {
       alert(text);
     }, 100);
+  }
+
+  putProductToAC(arg) {
+    const { getProductAC } = this.props;
+    getProductAC(arg);
   }
 
   isReady = () => {
@@ -69,24 +69,12 @@ class BarcodeScanner extends Component {
     }
   };
 
-  putProductToAC(arg) {
-    const { getProductAC } = this.props;
-    getProductAC(arg);
-  }
-
   render() {
     return (
-      <div>
-        <button onClick={() => console.log(this.state.isCameraReady)}>
-          123
-        </button>
+      <>
         {!this.state.isCameraReady ? (
           <div>
-            <Scanner
-              onDetected={this._onDetected}
-              isReady={this.isReady}
-              render={false}
-            />
+            <Scanner isReady={this.isReady} render={false} />
             <Skeleton
               variant="rectangular"
               width="320px"
@@ -94,18 +82,9 @@ class BarcodeScanner extends Component {
             ></Skeleton>
           </div>
         ) : (
-          <></>
+          <Scanner onDetected={this._onDetected} render={true} />
         )}
-        {this.state.isCameraReady ? (
-          <Scanner
-            onDetected={this._onDetected}
-            isReady={this.isReady}
-            render={true}
-          />
-        ) : (
-          <></>
-        )}
-      </div>
+      </>
     );
   }
 }

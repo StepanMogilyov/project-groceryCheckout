@@ -6,9 +6,8 @@ class Scanner extends Component {
     if (!this.props.render) {
       setTimeout(() => {
         this.props.isReady();
-      }, 3000);
+      }, 2000);
     }
-
     Quagga.init(
       {
         inputStream: {
@@ -18,16 +17,10 @@ class Scanner extends Component {
             height: 320,
             facingMode: "environment",
           },
-          //   area: { // defines rectangle of the detection/localization area
-          //     top: "10%",    // top offset
-          //     right: "10%",  // right offset
-          //     left: "10%",   // left offset
-          //     bottom: "10%"  // bottom offset
-          //   },
         },
         locator: {
           halfSample: true,
-          patchSize: "large", // x-small, small, medium, large, x-large
+          patchSize: "large",
           debug: {
             showCanvas: true,
             showPatches: false,
@@ -70,7 +63,9 @@ class Scanner extends Component {
   }
 
   _onDetected = (result) => {
-    this.props.onDetected(result);
+    if (this.props.onDetected) {
+      this.props.onDetected(result);
+    }
   };
 
   render() {

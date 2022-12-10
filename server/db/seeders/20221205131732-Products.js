@@ -16,7 +16,7 @@ module.exports = {
         {
           name: 'Orbit',
           price: 20,
-          article: '000018361251200001',
+          article: '000018360078100001',
           createdAt: new Date(),
           updatedAt: new Date()
         },
