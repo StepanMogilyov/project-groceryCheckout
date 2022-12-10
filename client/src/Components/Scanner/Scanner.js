@@ -3,6 +3,12 @@ import Quagga from "quagga";
 
 class Scanner extends Component {
   componentDidMount() {
+    if (!this.props.render) {
+      setTimeout(() => {
+        this.props.isReady();
+      }, 3000);
+    }
+
     Quagga.init(
       {
         inputStream: {
@@ -68,7 +74,17 @@ class Scanner extends Component {
   };
 
   render() {
-    return <div id="interactive" className="viewport" />;
+    if (!this.props.render) {
+      return (
+        <div
+          id="interactive"
+          className="viewport"
+          style={{ display: "none" }}
+        />
+      );
+    } else {
+      return <div id="interactive" className="viewport" />;
+    }
   }
 }
 
