@@ -18,7 +18,7 @@ export default function OneProduct({ el, addSumHandler, decSumHandler }) {
   };
 
   const decHandler = () => {
-    if (price > 0) {
+    if (quantity >= 2) {
       setPrice(price - el.price);
       setQuantity(quantity - 1);
       decSumHandler(el.price);
